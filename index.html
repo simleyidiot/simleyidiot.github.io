@@ -475,36 +475,41 @@
         - #CONTACT
       -->
 
-      <article class="contact" data-page="contact">
+      <!-- ... (previous HTML code) ... -->
 
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
+<!-- #CONTACT -->
+<article class="contact" data-page="contact">
 
-        <section class="contact-form">
+  <header>
+    <h2 class="h2 article-title">Contact</h2>
+  </header>
 
-          <h3 class="h3 form-title">Contact Form</h3>
+  <section class="contact-form">
 
-          <form action="#" class="form" data-form>
+    <h3 class="h3 form-title">Contact Form</h3>
 
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+    <form id="contact-form" action="javascript:void(0);" class="form" data-form>
 
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
-            </div>
+      <div class="input-wrapper">
+        <input type="text" name="fullname" id="fullname" class="form-input" placeholder="Full name" required data-form-input>
 
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+        <input type="email" name="email" id="email" class="form-input" placeholder="Email address" required data-form-input>
+      </div>
 
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
+      <textarea name="message" id="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
 
-          </form>
+      <button class="form-btn" type="submit" disabled data-form-btn="send-btn">
+        <ion-icon name="paper-plane"></ion-icon>
+        <span>Send Message</span>
+      </button>
 
-        </section>
+    </form>
 
-      </article>
+  </section>
+
+</article>
+
+<!-- ... (remaining HTML code) ... -->
 
     </div>
 
@@ -515,6 +520,56 @@
     - custom js link
   -->
   <script src="./assets/js/script.js"></script>
+
+  <!--
+    - custom js for contact
+  -->
+  <script>
+  // Get the form and submit button elements
+  const contactForm = document.getElementById('contact-form');
+  const submitButton = document.querySelector('[data-form-btn="send-btn"]');
+
+  // Function to handle the form submission
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    // Get the form input values
+    const fullname = document.getElementById('fullname').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    // Compose the email subject and body
+    const subject = `Contact Form Submission from ${fullname}`;
+    const body = `Name: ${fullname}\nEmail: ${email}\n\nMessage:\n${message}`;
+
+    // Compose the mailto link
+    const mailtoLink = `mailto:balayogesh003@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Open the default email client with the mailto link
+    window.open(mailtoLink);
+
+    // Display a success message
+    alert('Your message has been sent successfully!');
+
+    // Clear the form fields
+    contactForm.reset();
+
+    // Disable the submit button after form submission
+    submitButton.disabled = true;
+  }
+
+  // Enable the submit button when the form inputs are not empty
+  contactForm.addEventListener('input', () => {
+    const fullnameValue = document.getElementById('fullname').value;
+    const emailValue = document.getElementById('email').value;
+    const messageValue = document.getElementById('message').value;
+    submitButton.disabled = !(fullnameValue && emailValue && messageValue);
+  });
+
+  // Attach the form submission event handler
+  contactForm.addEventListener('submit', handleSubmit);
+</script>
+
 
   <!--
     - ionicon link
